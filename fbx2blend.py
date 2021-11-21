@@ -81,13 +81,12 @@ def printDirectoryFiles(directory):
 
 				new_path = path + "/"+ filename_fbx
 				print("new path = " + new_path)
-
-				os.mkdir(new_path)
-				#if not os.path.exists(new_path):
-				#	os.mkdir(new_path)
-				#else:
-				#	new_path = path + "/" + filename_fbx + "_NEW"
-				#	os.mkdir(new_path)
+				
+				if not os.path.exists(new_path):
+					os.mkdir(new_path)
+				else:
+					new_path = path + "/" + filename_fbx + "_NEW"
+					os.mkdir(new_path)
 
 				new_filename_blend = filename_fbx + "_ORG_" + ".blend"
 				print("new filename blend = " + new_filename_blend)
@@ -101,35 +100,35 @@ def printDirectoryFiles(directory):
 				first_file_path_blend = new_path + "/" + first_filename_blend
 				print("first file path blend = " + first_file_path_blend)
 
-				#if not os.path.exists(new_file_path_blend):
-				bpy.ops.wm.save_as_mainfile(filepath = new_file_path_blend)
-				bpy.ops.wm.save_as_mainfile(filepath = first_file_path_blend)
+				if not os.path.exists(new_file_path_blend):
+					bpy.ops.wm.save_as_mainfile(filepath = new_file_path_blend)
+					bpy.ops.wm.save_as_mainfile(filepath = first_file_path_blend)
 
-				bpy.ops.object.select_all(action='DESELECT')
+					bpy.ops.object.select_all(action='DESELECT')
 
-				objs = [ob for ob in bpy.context.scene.objects if ob.type in ('CAMERA', 'LIGHT')]
-				if (objs is not None):
-					bpy.ops.object.delete({"selected_objects": objs})
-
-				for o in bpy.context.scene.objects:
-					if o.name == "Cube":
-						objs = [bpy.context.scene.objects['Cube']]
+					objs = [ob for ob in bpy.context.scene.objects if ob.type in ('CAMERA', 'LIGHT')]
+					if (objs is not None):
 						bpy.ops.object.delete({"selected_objects": objs})
 
-				objs = [ob for ob in bpy.context.scene.objects if ob.type in ('ARMATURE')]
-				if (objs is not None):
-					bpy.ops.object.delete({"selected_objects": objs})
+					for o in bpy.context.scene.objects:
+						if o.name == "Cube":
+							objs = [bpy.context.scene.objects['Cube']]
+							bpy.ops.object.delete({"selected_objects": objs})
 
-				objs = [ob for ob in bpy.context.scene.objects if ob.type in ('MESH')]
-				if objs != None:
-					for ob in objs:
-						rotateX90(ob)
-						scale001(ob)
-						editMeshes(ob)
+					objs = [ob for ob in bpy.context.scene.objects if ob.type in ('ARMATURE')]
+					if (objs is not None):
+						bpy.ops.object.delete({"selected_objects": objs})
 
-				bpy.ops.wm.save_mainfile(filepath = first_file_path_blend)
+					objs = [ob for ob in bpy.context.scene.objects if ob.type in ('MESH')]
+					if objs != None:
+						for ob in objs:
+							rotateX90(ob)
+							scale001(ob)
+							editMeshes(ob)
 
-				#bpy.ops.wm.open_mainfile(filepath=first_file_path_blend)
+					bpy.ops.wm.save_mainfile(filepath = first_file_path_blend)
+
+					#bpy.ops.wm.open_mainfile(filepath=first_file_path_blend)
 
 				bpy.ops.wm.read_homefile(use_empty=True)
 				#print("_DONE" + "\n")
