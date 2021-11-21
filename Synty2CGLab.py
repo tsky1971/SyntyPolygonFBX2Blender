@@ -44,8 +44,9 @@ if __name__ == "__main__":
     full_path = bpy.path.basename(bpy.context.blend_data.filepath)
     print("full_path = " + full_path)
 
+    filename =  bpy.path.basename(bpy.context.blend_data.filepath)
     filename_w_ext = os.path.basename(full_path)
-    filename, file_extension = os.path.splitext(filename_w_ext)
+    file_extension = os.path.splitext(filename_w_ext)
 
     print("filename=" + filename + " ext=" + file_extension)
 
